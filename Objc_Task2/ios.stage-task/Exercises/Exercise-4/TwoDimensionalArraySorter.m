@@ -4,7 +4,7 @@
 
 - (NSArray *)twoDimensionalSort:(NSArray<NSArray *> *)array {
     
-    if (![array.firstObject isKindOfClass: [NSArray class]]) {
+    if (array == nil || array.count == 0) {
         return @[];
     }
     
