@@ -4,45 +4,42 @@
 
 - (NSArray *)twoDimensionalSort:(NSArray<NSArray *> *)array {
     
-    if (array == nil || array.count == 0) {
-        return @[];
-    }
+    NSMutableArray *arrayOfNumber = [NSMutableArray new];
+    NSMutableArray *arrayOfString = [NSMutableArray new];
+    NSMutableArray *sortedArray = [NSMutableArray new];
     
-    NSMutableArray *arrStr = [NSMutableArray new];
-    NSMutableArray *arrNum = [NSMutableArray new];
-
-    for (int i = 0; i < array.count; i++) {
+    for (NSArray *itemArray in array) {
         
-        if ([array[i] isKindOfClass: NSArray.class]) {
-                if ([array[i].firstObject isKindOfClass: NSString.class]) {
-                    [arrStr addObjectsFromArray: array[i]];
-                } else if ([array[i].firstObject isKindOfClass: NSNumber.class]) {
-                    [arrStr addObjectsFromArray: array[i]];
+        if ([itemArray isKindOfClass: [NSArray class]]) {
+            
+            for (int i = 0; i < itemArray.count; i++) {
+                
+                if ([itemArray[i] isKindOfClass: [NSNumber class]]) {
+                    [arrayOfNumber addObject: itemArray[i]];
+                } else if ([itemArray[i] isKindOfClass: [NSString class]]) {
+                    [arrayOfString addObject: itemArray[i]];
                 }
+            }
+            
         } else {
             return @[];
         }
-        
     }
-        
-    if (arrNum.count > 0 && arrStr.count > 0) {
-        [arrNum sortUsingDescriptors:
-         [NSArray arrayWithObjects: [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:YES], nil]];
-        [arrStr sortUsingDescriptors:
-         [NSArray arrayWithObjects: [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:NO], nil]];
-        
-        return @[arrNum, arrStr];
-    } else if (arrNum.count == 0) {
-        [arrStr sortUsingDescriptors:
-         [NSArray arrayWithObjects: [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:YES], nil]];
-        
-        return arrStr;
+    
+    [arrayOfNumber sortUsingSelector: @selector(compare:)];
+    [arrayOfString sortUsingSelector: @selector(compare:)];
+    
+    NSArray *reversArrayString = [[arrayOfString reverseObjectEnumerator] allObjects];
+    
+    if ((arrayOfNumber.count != 0) && (arrayOfString.count != 0)) {
+        [sortedArray addObjectsFromArray: @[arrayOfNumber]];
+        [sortedArray addObjectsFromArray: @[reversArrayString]];
     } else {
-        [arrNum sortUsingDescriptors:
-         [NSArray arrayWithObjects: [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:YES], nil]];
-        
-        return arrNum;
+        [sortedArray addObjectsFromArray: arrayOfNumber];
+        [sortedArray addObjectsFromArray: arrayOfString];
     }
+    
+    return sortedArray;
 }
 
 @end
