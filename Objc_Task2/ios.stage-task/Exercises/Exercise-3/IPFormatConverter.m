@@ -12,8 +12,7 @@
     
     n = n > 4 ? 4 : n;
     
-    for (int i = 0; i < n; i++)
-    {
+    for (int i = 0; i < n; i++) {
         if ([numbersArray[i] intValue] < 0){
             return @"Negative numbers are not valid for input.";
         }
@@ -27,8 +26,7 @@
     
     NSMutableString *strIP = [arrIP componentsJoinedByString:@"."].mutableCopy;
     
-    if (n < 4)
-    {
+    if (n < 4) {
         for (int i = 0; i < 4 - n; i++){
             [strIP appendString:@".0"];
         }
