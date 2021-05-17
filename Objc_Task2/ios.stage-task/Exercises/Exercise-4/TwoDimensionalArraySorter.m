@@ -4,17 +4,21 @@
 
 - (NSArray *)twoDimensionalSort:(NSArray<NSArray *> *)array {
     
+    if (![array.firstObject isKindOfClass: [NSArray class]]) {
+        return @[];
+    }
+    
     NSMutableArray *arrStr = [NSMutableArray new];
     NSMutableArray *arrNum = [NSMutableArray new];
 
     for (int i = 0; i < array.count; i++) {
         
         if ([array[i] isKindOfClass: NSArray.class]) {
-            if ([array[i].firstObject isKindOfClass: NSString.class]) {
-                [arrStr addObjectsFromArray: array[i]];
-            } else if ([array[i].firstObject isKindOfClass: NSNumber.class]) {
-                [arrStr addObjectsFromArray: array[i]];
-            }
+                if ([array[i].firstObject isKindOfClass: NSString.class]) {
+                    [arrStr addObjectsFromArray: array[i]];
+                } else if ([array[i].firstObject isKindOfClass: NSNumber.class]) {
+                    [arrStr addObjectsFromArray: array[i]];
+                }
         } else {
             return @[];
         }
@@ -30,12 +34,12 @@
         return @[arrNum, arrStr];
     } else if (arrNum.count == 0) {
         [arrStr sortUsingDescriptors:
-         [NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"self" ascending:YES], nil]];
+         [NSArray arrayWithObjects: [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:YES], nil]];
         
         return arrStr;
     } else {
         [arrNum sortUsingDescriptors:
-         [NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"self" ascending:YES], nil]];
+         [NSArray arrayWithObjects: [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:YES], nil]];
         
         return arrNum;
     }
